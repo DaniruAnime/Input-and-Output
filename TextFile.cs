@@ -3,78 +3,87 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-[Serializable]
-public class TextFile
+namespace InputOutput
 {
-    public string Name { get; set; }
-    public string Content { get; set; }
-
-    public TextFile()
+    [Serializable]
+    public class TextFile
     {
-        Name = "";
-        Content = "";
-    }
+        public string Name { get; set; }
+        public string Content { get; set; }
 
-    public TextFile(string name, string content)
-    {
-        Name = name;
-        Content = content;
-    }
-
-    public Memento CreateMemento()
-    {
-        return new Memento(Content);
-    }
-
-    public void Restore(Memento memento)
-    {
-        Content = memento.SavedContent;
-    }
-
-    public class Memento
-    {
-        public string SavedContent { get; }
-        public Memento(string content)
+        public TextFile()
         {
-            SavedContent = content;
+            Name = "";
+            Content = "";
         }
-    }
 
-    public void SaveXml(string path)
-    {
-        XmlSerializer serializer = new XmlSerializer(typeof(TextFile));
-        FileStream fileStream = new FileStream(path, FileMode.Create);
+        public TextFile(string name, string content)
+        {
+            Name = name;
+            Content = content;
+        }
 
-        serializer.Serialize(fileStream, this);
-        fileStream.Close();
-    }
+        public Memento CreateMemento()
+        {
+            return new Memento(Content);
+        }
 
-    public static TextFile LoadXml(string path)
-    {
-        XmlSerializer serializer = new XmlSerializer(typeof(TextFile));
-        FileStream fileStream = new FileStream(path, FileMode.Open);
-        TextFile temp = (TextFile)serializer.Deserialize(fileStream);
+        public void Restore(Memento memento)
+        {
+            Content = memento.SavedContent;
+        }
 
-        fileStream.Close();
-        return temp;
-    }
+        public class Memento
+        {
+            public string SavedContent { get; }
+            public Memento(string content)
+            {
+                SavedContent = content;
+            }
+        }
 
-    public void SaveBinary(string path)
-    {
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream fileStream = new FileStream(path, FileMode.Create);
-        
-        binaryFormatter.Serialize(fileStream, this);
-        fileStream.Close();
-    }
+        public void SaveXml(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(TextFile));
+            FileStream fileStream = new FileStream(path, FileMode.Create);
 
-    public static TextFile LoadBinary(string path)
-    {
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream fileStream = new FileStream(path, FileMode.Open);
-        TextFile temp = (TextFile)binaryFormatter.Deserialize(fileStream);
+            serializer.Serialize(fileStream, this);
+            fileStream.Close();
 
-        fileStream.Close();
-        return temp;
+            Console.WriteLine("Save in XML complete. Press any key...");
+            Console.ReadKey();
+        }
+
+        public static TextFile LoadXml(string path)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(TextFile));
+            FileStream fileStream = new FileStream(path, FileMode.Open);
+            TextFile temp = (TextFile)serializer.Deserialize(fileStream);
+
+            fileStream.Close();
+            return temp;
+        }
+
+        public void SaveBinary(string path)
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream fileStream = new FileStream(path, FileMode.Create);
+
+            binaryFormatter.Serialize(fileStream, this);
+            fileStream.Close();
+
+            Console.WriteLine("Save in Binary complete. Press any key...");
+            Console.ReadKey();
+        }
+
+        public static TextFile LoadBinary(string path)
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream fileStream = new FileStream(path, FileMode.Open);
+            TextFile temp = (TextFile)binaryFormatter.Deserialize(fileStream);
+
+            fileStream.Close();
+            return temp;
+        }
     }
 }
