@@ -1,18 +1,18 @@
 using System;
+using System.ComponentModel;
 
 namespace InputOutput
 {
     public class Program
     {
+        private static TextFile myFile = new TextFile("myDoc.txt", "");
+        private static TextEditor editor = new TextEditor(myFile);
+        private static Indexer indexer = new Indexer();
+        private static Search searcher = new Search();
+
         public static void Main()
         {
-            TextFile myFile = new TextFile("myDoc.txt", "");
-            TextEditor editor = new TextEditor(myFile);
-            Indexer indexer = new Indexer();
-            Search searcher = new Search();
-
             bool running = true;
-
             while (running)
             {
                 Console.Clear();
@@ -37,60 +37,69 @@ namespace InputOutput
                     !Enum.IsDefined(typeof(menuOption), result))
                 {
                     Console.WriteLine("Incorrect input. Try again");
+                    Console.ReadKey();
                     continue;
                 }
 
                 switch (result)
                 {
                     case menuOption.EnterString:
-                        Console.Write("Enter string: ");
-                        string input = Console.ReadLine();
-                        editor.UpdateContent(input);
+                        InputString();
                         break;
-
                     case menuOption.Undo:
                         editor.Undo();
-                        Console.WriteLine("Undo complete. Press any key...");
-                        Console.ReadKey();
                         break;
-
                     case menuOption.SaveXml:
                         myFile.SaveXml("file.xml");
                         break;
-
                     case menuOption.SaveBinary:
                         myFile.SaveBinary("file.bin");
                         break;
-
                     case menuOption.SaveTxt:
                         myFile.SaveAsText("file.txt");
                         break;
-
                     case menuOption.Search:
-                        Console.Write("Enter keyword to search: ");
-                        string word = Console.ReadLine();
-                        searcher.IndexAndPrint(Environment.CurrentDirectory, new string[] { word });
-                        Console.WriteLine("\nSearch complete. Press any key...");
-                        Console.ReadKey();
+                        InputSearch();
                         break;
-
                     case menuOption.Indexer:
-                        Console.Write("Enter keywords (space separated): ");
-                        string[] words = Console.ReadLine().Split(' ');
-                        indexer.CreateIndex(Environment.CurrentDirectory, words);
-                        Console.WriteLine("Press any key...");
-                        indexer.PrintIndex();
-                        Console.ReadKey();
+                        InputIndexing();
                         break;
-
                     case menuOption.Exit:
                         running = false;
                         break;
                 }
             }
         }
-    }
+        private static void InputString()
+        {
+            Console.Write("Enter string: ");
+            string input = Console.ReadLine();
 
+            editor.UpdateContent(input);
+        }
+        private static void InputSearch()
+        {
+            Console.Write("Enter keyword to search: ");
+            string word = Console.ReadLine();
+
+            searcher.IndexAndPrint(Environment.CurrentDirectory, new[] { word });
+
+            Console.WriteLine("\nSearch complete. Press any key...");
+            Console.ReadKey();
+        }
+        private static void InputIndexing()
+        {
+            Console.Write("Enter keywords (space separated): ");
+            string[] words = Console.ReadLine().Split(' ');
+
+            indexer.CreateIndex(Environment.CurrentDirectory, words);
+            indexer.PrintIndex();
+
+            Console.WriteLine("Press any key...");
+            Console.ReadKey();
+        }
+    }
+    
     public enum menuOption
     {
         EnterString = 1,

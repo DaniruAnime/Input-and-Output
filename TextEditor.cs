@@ -7,7 +7,10 @@ namespace InputOutput
         private TextFile _file;
         private Stack<TextFile.Memento> _history = new Stack<TextFile.Memento>();
 
-        public TextEditor(TextFile file) { _file = file; }
+        public TextEditor(TextFile file)
+        { 
+            _file = file;
+        }
 
         public void UpdateContent(string newContent)
         {
@@ -21,8 +24,14 @@ namespace InputOutput
             {
                 _file.Restore(_history.Pop());
             }
+
+            Console.WriteLine("Undo complete. Press any key...");
+            Console.ReadKey();
         }
 
-        public string GetCurrentContent() { return _file.Content; }
+        public string GetCurrentContent()
+        {
+            return _file.Content;
+        }
     }
 }

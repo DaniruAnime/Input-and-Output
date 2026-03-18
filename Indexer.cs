@@ -12,7 +12,10 @@ namespace InputOutput
         {
             _index.Clear();
             
-            if (!Directory.Exists(directoryPath)) return;
+            if (!Directory.Exists(directoryPath))
+            {
+                return;
+            }
     
             foreach (string word in keywords)
             {
@@ -43,7 +46,10 @@ namespace InputOutput
             {
                 Console.WriteLine($"Keyword: [{entry.Key}]");
 
-                if (entry.Value.Count == 0) Console.WriteLine("  - Not found");
+                if (entry.Value.Count == 0) 
+                {
+                    Console.WriteLine("  - Not found");
+                }
                 
                 foreach (string file in entry.Value)
                 {

@@ -8,7 +8,10 @@ namespace InputOutput
     {
         public void IndexAndPrint(string directory, string[] keywords)
         {
-            if (!Directory.Exists(directory)) return;
+            if (!Directory.Exists(directory)) 
+            {
+                return;
+            }
 
             string[] files = Directory.GetFiles(directory, "file.*");
             
@@ -27,7 +30,10 @@ namespace InputOutput
                         foundAny = true;
                     }
                 }
-                if (!foundAny) Console.WriteLine("  - Not found");
+                if (!foundAny)
+                {
+                    Console.WriteLine("  - Not found");
+                }
             }
         }
     }
