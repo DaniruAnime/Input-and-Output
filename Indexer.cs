@@ -19,7 +19,7 @@ namespace InputOutput
                 _index[word] = new List<string>();
             }
     
-            string[] files = Directory.GetFiles(directoryPath, "*.txt");
+            string[] files = Directory.GetFiles(directoryPath, "file.*");
     
             foreach (string filePath in files)
             {
@@ -38,14 +38,16 @@ namespace InputOutput
         public void PrintIndex()
         {
             Console.WriteLine("\n--- Indexer result ---");
+            
             foreach (var entry in _index)
             {
-                Console.WriteLine($"Keyword '{entry.Key}' found in files:");
-                if (entry.Value.Count == 0) Console.WriteLine("  - not found");
+                Console.WriteLine($"Keyword: [{entry.Key}]");
+
+                if (entry.Value.Count == 0) Console.WriteLine("  - Not found");
                 
                 foreach (string file in entry.Value)
                 {
-                    Console.WriteLine($"  - {Path.GetFileName(file)}");
+                    Console.WriteLine($"  - Found in: {Path.GetFileName(file)}");
                 }
             }
         }

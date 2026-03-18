@@ -85,5 +85,12 @@ namespace InputOutput
             fileStream.Close();
             return temp;
         }
+
+        public void SaveAsText(string path)
+        {
+            File.WriteAllText(path, Content);
+            Console.WriteLine("Save in TXT complete. Press any key...");
+            Console.ReadKey();
+        }
     }
 }

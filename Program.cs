@@ -24,9 +24,10 @@ namespace InputOutput
                     2. Undo
                     3. Save in XML
                     4. Save in Binary
-                    5. Search
-                    6. Index Files
-                    7. Exit
+                    5. Save in txt
+                    6. Search
+                    7. Index Files
+                    8. Exit
                     Select options: 
                     """);
 
@@ -61,8 +62,16 @@ namespace InputOutput
                         myFile.SaveBinary("file.bin");
                         break;
 
+                    case menuOption.SaveTxt:
+                        myFile.SaveAsText("file.txt");
+                        break;
+
                     case menuOption.Search:
-                        searcher.IndexAndPrint();
+                        Console.Write("Enter keyword to search: ");
+                        string word = Console.ReadLine();
+                        searcher.IndexAndPrint(Environment.CurrentDirectory, new string[] { word });
+                        Console.WriteLine("\nSearch complete. Press any key...");
+                        Console.ReadKey();
                         break;
 
                     case menuOption.Indexer:
@@ -88,6 +97,7 @@ namespace InputOutput
         Undo,
         SaveXml,
         SaveBinary,
+        SaveTxt,
         Search,
         Indexer,
         Exit

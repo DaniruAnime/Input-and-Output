@@ -10,7 +10,7 @@ namespace InputOutput
         {
             if (!Directory.Exists(directory)) return;
 
-            string[] files = Directory.GetFiles(directory, "*.txt");
+            string[] files = Directory.GetFiles(directory, "file.*");
             
             foreach (string word in keywords)
             {
@@ -19,7 +19,9 @@ namespace InputOutput
 
                 foreach (string path in files)
                 {
-                    if (File.ReadAllText(path).Contains(word))
+                    string fileContent = File.ReadAllText(path).ToLower();
+
+                    if (fileContent.Contains(word.ToLower()))
                     {
                         Console.WriteLine($"  - Found in: {Path.GetFileName(path)}");
                         foundAny = true;
