@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace InputOutput
 {
@@ -17,19 +18,29 @@ namespace InputOutput
                 return;
             }
     
-            foreach (string word in keywords)
+            for (int wordIndex = 0; wordIndex < keywords.Length; ++wordIndex)
             {
+                string word;
+                word = keywords[wordIndex];
                 _index[word] = new List<string>();
             }
     
             string[] files = Directory.GetFiles(directoryPath, "file.*");
     
-            foreach (string filePath in files)
+            for (int fileIndex = 0; fileIndex < files.Length; ++fileIndex)
             {
-                string content = File.ReadAllText(filePath).ToLower();
+                string filePath;
+                string content;
+
+                filePath = files[fileIndex];
+                content = File.ReadAllText(filePath).ToLower();
     
-                foreach (string word in keywords)
+                for (int keywordIndex = 0; keywordIndex < keywords.Length; ++keywordIndex)
                 {
+                    string word;
+
+                    word = keywords[keywordIndex];
+
                     if (content.Contains(word.ToLower()))
                     {
                         _index[word].Add(filePath);
@@ -37,22 +48,35 @@ namespace InputOutput
                 }
             }
         }
-    
+
         public void PrintIndex()
         {
             Console.WriteLine("\n--- Indexer result ---");
-            
-            foreach (var entry in _index)
-            {
-                Console.WriteLine($"Keyword: [{entry.Key}]");
 
-                if (entry.Value.Count == 0) 
+            string[] keysArray;
+
+            keysArray = _index.Keys.ToArray();
+
+            for (int keyIndex = 0; keyIndex < keysArray.Length; ++keyIndex)
+            {
+                string currentKey;
+
+                currentKey = keysArray[keyIndex];
+                List<string> fileList = _index[currentKey];
+
+                Console.WriteLine($"Keyword: [{currentKey}]");
+
+                if (fileList.Count == 0) 
                 {
                     Console.WriteLine("  - Not found");
                 }
                 
-                foreach (string file in entry.Value)
+                for (int fileResultIndex = 0; fileResultIndex < fileList.Count; ++fileResultIndex)
                 {
+                    string file;
+
+                    file = fileList[fileResultIndex];
+                    
                     Console.WriteLine($"  - Found in: {Path.GetFileName(file)}");
                 }
             }

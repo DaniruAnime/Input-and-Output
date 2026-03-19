@@ -14,15 +14,23 @@ namespace InputOutput
             }
 
             string[] files = Directory.GetFiles(directory, "file.*");
-            
-            foreach (string word in keywords)
-            {
-                Console.WriteLine($"\nKey word: [{word}]");
-                bool foundAny = false;
+            string word;
+            string path;
+            string fileContent;
+            bool foundAny;
 
-                foreach (string path in files)
+            for (int keywordIndex = 0; keywordIndex < keywords.Length; ++keywordIndex)
+            {
+                word = keywords[keywordIndex];
+
+                Console.WriteLine($"\nKeyword: [{word}]");
+
+                foundAny = false;
+
+                for (int fileIndex = 0; fileIndex < files.Length; ++fileIndex)
                 {
-                    string fileContent = File.ReadAllText(path).ToLower();
+                    path = files[fileIndex];
+                    fileContent = File.ReadAllText(path).ToLower();
 
                     if (fileContent.Contains(word.ToLower()))
                     {
@@ -30,6 +38,7 @@ namespace InputOutput
                         foundAny = true;
                     }
                 }
+                
                 if (!foundAny)
                 {
                     Console.WriteLine("  - Not found");

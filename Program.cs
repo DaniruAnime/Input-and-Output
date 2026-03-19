@@ -12,7 +12,10 @@ namespace InputOutput
 
         public static void Main()
         {
-            bool running = true;
+            bool running;
+
+            running = true;
+
             while (running)
             {
                 Console.Clear();
@@ -31,7 +34,9 @@ namespace InputOutput
                     Select options: 
                     """);
 
-                string choise = Console.ReadLine();
+                string choise;
+                
+                choise = Console.ReadLine();
 
                 if (!Enum.TryParse(choise, ignoreCase: true, out menuOption result) ||
                     !Enum.IsDefined(typeof(menuOption), result))
@@ -73,14 +78,18 @@ namespace InputOutput
         private static void InputString()
         {
             Console.Write("Enter string: ");
-            string input = Console.ReadLine();
+            string input;
+
+            input = Console.ReadLine();
 
             editor.UpdateContent(input);
         }
         private static void InputSearch()
         {
             Console.Write("Enter keyword to search: ");
-            string word = Console.ReadLine();
+            string word;
+
+            word = Console.ReadLine();
 
             searcher.IndexAndPrint(Environment.CurrentDirectory, new[] { word });
 
@@ -90,7 +99,9 @@ namespace InputOutput
         private static void InputIndexing()
         {
             Console.Write("Enter keywords (space separated): ");
-            string[] words = Console.ReadLine().Split(' ');
+            string[] words;
+
+            words = Console.ReadLine().Split(' ');
 
             indexer.CreateIndex(Environment.CurrentDirectory, words);
             indexer.PrintIndex();
