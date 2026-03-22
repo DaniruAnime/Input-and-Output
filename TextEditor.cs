@@ -5,7 +5,7 @@ namespace InputOutput
     public class TextEditor
     {
         private TextFile _file;
-        private Stack<TextFile.Memento> _history = new Stack<TextFile.Memento>();
+        private Stack<Memento> _history = new Stack<Memento>();
 
         public TextEditor(TextFile file)
         { 

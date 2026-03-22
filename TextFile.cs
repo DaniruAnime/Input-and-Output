@@ -33,15 +33,6 @@ namespace InputOutput
             Content = memento.SavedContent;
         }
 
-        public class Memento
-        {
-            public string SavedContent { get; }
-            public Memento(string content)
-            {
-                SavedContent = content;
-            }
-        }
-
         public void SaveXml(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(TextFile));
