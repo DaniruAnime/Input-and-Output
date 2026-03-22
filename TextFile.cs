@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace InputOutput
 {
     [Serializable]
-    public class TextFile
+    public class TextFile : IOriginator
     {
         public string Name { get; set; }
         public string Content { get; set; }
