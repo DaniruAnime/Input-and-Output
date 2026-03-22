@@ -4,25 +4,25 @@ namespace InputOutput
 {
     public class TextEditor
     {
-        private TextFile _file;
+        private IOriginator _originator;
         private Stack<Memento> _history = new Stack<Memento>();
 
-        public TextEditor(TextFile file)
+        public TextEditor(TextFile originator)
         { 
-            _file = file;
+            _originator = originator;
         }
 
         public void UpdateContent(string newContent)
         {
-            _history.Push(_file.CreateMemento());
-            _file.Content = newContent;
+            _history.Push(_originator.CreateMemento());
+            _originator.Content = newContent;
         }
 
         public void Undo()
         {
             if (_history.Count > 0)
             {
-                _file.Restore(_history.Pop());
+                _originator.Restore(_history.Pop());
             }
 
             Console.WriteLine("Undo complete. Press any key...");
@@ -31,7 +31,7 @@ namespace InputOutput
 
         public string GetCurrentContent()
         {
-            return _file.Content;
+            return _originator.Content;
         }
     }
 }
